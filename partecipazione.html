@@ -1,96 +1,180 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<title>RSVP Matrimonio</title>
+  <!-- Inserisci nel <head> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
 
+<meta charset="UTF-8">
+<title>Invito di Matrimonio</title>
+
+<!-- Font eleganti -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+
+ <!-- Il tuo CSS -->
+ <link rel="stylesheet" href="stile.css">
 <style>
-body {
-  padding-Top: 20px;
-  font-family: 'Playfair Display', serif;
-  background: transparent;
+
+.open-btn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  padding:18px 40px;
+  border:1px solid #786a6a;
+  color:#786a6a;
+  font-size:22px;
+  cursor:pointer;
+  background:rgba(255,255,255,0.75);
+  z-index:5;
 }
 
-/* Corpo principale centrato */
-.corpo {
-  padding-Top: 20px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  overflow-y: auto;    
-  max-height: 200px;
-  border: none;            /* già presente */
-  background: none;        /* niente colore o immagine di sfondo */
-  box-shadow: none;        /* rimuove eventuali ombre */
-  background: transparent;
-  text-align: center;
-  color: #786a6a;
-  line-height: 1.8;
-  z-index: 10;
+/* RSVP minimale */
+.rsvp-overlay {
+  position:absolute;
+  top:60%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
+  max-width:400px;
+  color:#786a6a;
+  text-align:center;
+  z-index:20;
 }
 
-/* Input e bottoni RSVP */
-.rsvp-step1 input,
+.rsvp-step1 div {
+  display: flex;
+  align-items: center;    /* centra verticalmente label e bottoni tra loro */
+  justify-content: center; /* centra orizzontalmente tutto il blocco nella pagina */
+  gap: 10px;               /* spazio tra label e bottoni */
+  margin-top: 20px;        /* opzionale: distanza dal bordo superiore */
+}
+
+.rsvp-step1 input {
+  width:100%;
+  border:none;
+  border-bottom:1px solid #786a6a;
+  background:transparent;
+  padding:8px 0;
+  font-size:1em;
+  margin-bottom:20px;
+  color:#786a6a;
+}
+
+.rsvp-step1 button {
+  padding:10px 25px;
+  margin:0 10px;
+  border:1px solid #786a6a;
+  background:transparent;
+  color:#786a6a;
+  cursor:pointer;
+}
+
+.rsvp-step1 button.enabled { opacity:1; }
+
+.rsvp-step2 {
+  display:none;
+  text-align:left;
+  margin-top:20px;
+}
+
 .rsvp-step2 input,
-.rsvp-step2 select {
-  width: 100%;
-  margin: 8px 0;
-  padding: 6px 8px;
-  border: none;
-  border-bottom: 1px solid #786a6a;
-  background: transparent;
-  color: #786a6a;
-  font-size: 1em;
+.rsvp-step2 select,
+.rsvp-step2 textarea {
+  width:100%;
+  margin:5px 0;
+  padding:6px 0;
+  border:none;
+  border-bottom:1px solid #786a6a;
+  background:transparent;
+  color:#786a6a;
 }
 
-.rsvp-step1 button,
-.rsvp-step2 button,
-#partecipantiContainer button {
-  padding: 8px 20px;
-  margin: 5px;
-  border: 1px solid #786a6a;
-  background: transparent;
-  color: #786a6a;
-  cursor: pointer;
+.rsvp-step2 button {
+  margin-top:10px;
+  padding:10px 25px;
+  border:1px solid #786a6a;
+  background:transparent;
+  color:#786a6a;
+  cursor:pointer;
 }
 
 .partecipante {
   display: flex;
-  gap: 10px;
   align-items: center;
-  margin: 5px 0;
+  gap: 10px;               /* spazio tra elementi */
+  border: 1px solid #ccc;  /* unico bordo attorno al blocco */
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
-.partecipante input {
-  flex: 1;
-}
-.partecipante select {
-  flex: 0 0 100px;
-}
-.partecipante button.remove-btn {
-  background: none;
-  border: none;
-  font-size: 1.2em;
+.partecipante button {
+  background-color: transparent; /* niente colore di sfondo */
+  color: #333;                   /* testo discreto */
+  border: 1px solid #ccc;        /* bordo leggero per farlo sembrare un bottone */
+  padding: 4px 8px;
+  border-radius: 3px;
   cursor: pointer;
-  color: #555;
+}
+
+.partecipante button:hover {
+  background-color: #f0f0f0;     /* leggero effetto hover */
+}
+
+.partecipante button.remove-btn {
+  background-color: transparent;  /* nessuno sfondo */
+  border: none;                   /* niente bordo */
+  color: #555;                    /* grigio scuro */
+  font-size: 1.2em;               /* dimensione visibile ma discreta */
+  cursor: pointer;
+  padding: 0 6px;
+  line-height: 1;
 }
 
 .partecipante button.remove-btn:hover {
-  color: #000;
+  color: #000;                    /* diventa più scura al passaggio del mouse */
 }
 
-.rsvp-step2 { display: none; }
-
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const area = document.getElementById("click-area");
+    const text = document.getElementById("hidden-text");
+  
+    area.addEventListener("click", function() {
+      text.classList.add("show");
+    });
+  });
+  </script>
 </head>
 
 <body>
 
-<div class="corpo">
+<div class="a4">
+  <div class="canvas">
+    <img src="sfondo.png" alt="">
+    
+
+  <!-- Scritta nascosta inizialmente -->
+  <div id="temporary-text" style="
+  position:absolute;
+  top:70%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  font-size:3vw;
+  text-align:center;
+  color: #786a6a;
+  font-family: 'Playfair Display', serif;
+  display:none;
+  z-index:10;
+">
+Non potevamo immaginare il nostro giorno speciale senza condividere la gioia con voi, che avete sempre fatto parte delle nostre vite e dei nostri ricordi più preziosi.
+
+</div>
+
+
+ <div class="corpo" id="corpo">
   <div class="rsvp-overlay">
     <div class="rsvp-step1">
       <input type="text" id="rsvpName" placeholder="Inserisci Nome e Cognome" oninput="checkName()">
@@ -116,81 +200,110 @@ body {
       <button onclick="sendYes()">Invia</button>
     </div>
   </div>
+  
+
+
+  </div>
+
+  <div class="action-buttons">
+     <a href="home.html" class="action-btn"><i class="fa-solid fa-house"></i></a>
+  </div>
+
+ <!-- Bottoni sotto il corpo del matrimonio -->
+</div>
 </div>
 
 <script>
-function checkName(){
-  const name = document.getElementById("rsvpName").value.trim();
-  const yes = document.getElementById("yesBtn");
-  const no = document.getElementById("noBtn");
-  if(name.length>0){
-    yes.classList.add("enabled");
-    no.classList.add("enabled");
-  } else {
-    yes.classList.remove("enabled");
-    no.classList.remove("enabled");
+  document.addEventListener("contextmenu", e => e.preventDefault());
+  </script>
+
+<script>
+  const book = document.querySelector(".book");
+  const btn = document.getElementById("openBtn");
+  
+  btn.addEventListener("click", ()=>{
+    book.classList.add("open");
+    setTimeout(()=> book.remove(), 1600);
+  });
+  </script>
+
+<script>
+  function checkName(){
+    const name = document.getElementById("rsvpName").value.trim();
+    const yes = document.getElementById("yesBtn");
+    const no = document.getElementById("noBtn");
+    if(name.length>0){
+      yes.classList.add("enabled");
+      no.classList.add("enabled");
+    } else {
+      yes.classList.remove("enabled");
+      no.classList.remove("enabled");
+    }
   }
-}
-
-function showStep2(isYes){
-  const name = document.getElementById("rsvpName").value.trim();
-  if(!name){ alert("Inserisci Nome e Cognome"); return; }
-  if(isYes){
-    document.getElementById("step2").style.display="block";
-  } else {
-    sendNo();
+  
+  function showStep2(isYes){
+    const name = document.getElementById("rsvpName").value.trim();
+    if(!name){ alert("Inserisci Nome e Cognome"); return; }
+    if(isYes){
+      document.getElementById("step2").style.display="block";
+    } else {
+      sendNo();
+    }
+    document.querySelector(".rsvp-step1").style.display="none";
   }
-  document.querySelector(".rsvp-step1").style.display="none";
-}
-
-function toggleExtra(){
-  const val = document.getElementById("compagnia").value;
-  document.getElementById("extraFields").style.display = (val==="compagnia") ? "block":"none";
-}
-
-function addPartecipante(){
+  
+  function toggleExtra(){
+    const val = document.getElementById("compagnia").value;
+    document.getElementById("extraFields").style.display = (val==="compagnia") ? "block":"none";
+  }
+  function addPartecipante(){
   const container = document.getElementById("partecipantiContainer");
+
   const div = document.createElement("div");
   div.classList.add("partecipante");
+
   div.innerHTML = `
-    <input type="text" placeholder="Nome partecipante">
-    <select>
-      <option value="adulto">Adulto</option>
-      <option value="bimbo03">Bambino 0-3</option>
-      <option value="bimbo3plus">Bambino 3+</option>
-    </select>
-    <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
-  `;
+  <input type="text" placeholder="Nome partecipante">
+  <select>
+    <option value="adulto">Adulto</option>
+    <option value="bimbo03">Bambino 0-3</option>
+    <option value="bimbo3plus">Bambino 3+</option>
+  </select>
+  <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+`;
+
   container.appendChild(div);
 }
-
-function sendNo(){
-  const name = document.getElementById("rsvpName").value.trim();
-  if(!name){ alert("Inserisci Nome e Cognome"); return; }
-  const msg = `Ciao! Sono ${name} e purtroppo non potrò partecipare al matrimonio 💌`;
-  window.open("https://wa.me/393470692307?text="+encodeURIComponent(msg), "_blank");
-}
-
-function sendYes(){
-  const name = document.getElementById("rsvpName").value.trim();
-  if(!name){ alert("Inserisci Nome e Cognome"); return; }
-
-  const extraElems = document.querySelectorAll("#partecipantiContainer .partecipante");
-  let extraMsg = "";
-  extraElems.forEach(el => {
-    const n = el.querySelector("input").value.trim();
-    const t = el.querySelector("select").value;
-    if(n) extraMsg += `${n} (${t})\n`;
-  });
-
-  const msg = `Conferma partecipazione matrimonio 💍
-Nome: ${name}
-Partecipanti aggiuntivi:
-${extraMsg}`;
-
-  window.open("https://wa.me/393470692307?text="+encodeURIComponent(msg), "_blank");
-}
-</script>
-
+  function sendNo(){
+    const name = document.getElementById("rsvpName").value.trim();
+    if(!name){ alert("Inserisci Nome e Cognome"); return; }
+    const msg = `Ciao! Sono ${name} e purtroppo non potrò partecipare al matrimonio 💌`;
+    window.open("https://wa.me/393892043551?text="+encodeURIComponent(msg), "_blank");
+  }
+  
+  function sendYes(){
+    const name = document.getElementById("rsvpName").value.trim();
+    if(!name){ alert("Inserisci Nome e Cognome"); return; }
+  
+    const extraElems = document.querySelectorAll("#partecipantiContainer .partecipante");
+    let extraMsg = "";
+  
+    extraElems.forEach(el => {
+      const n = el.querySelector("input").value.trim();
+      const t = el.querySelector("select").value;
+      if(n) extraMsg += `${n} (${t})\n`;
+    });
+  
+    const msg = `Conferma partecipazione matrimonio 💍
+  Nome: ${name}
+  Partecipanti aggiuntivi:
+  ${extraMsg}`;
+  
+    window.open("https://wa.me/393892043551?text="+encodeURIComponent(msg), "_blank");
+  }
+  </script>
+  
+  
+  
 </body>
 </html>

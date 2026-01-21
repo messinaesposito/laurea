@@ -10,329 +10,9 @@
 <!-- Font eleganti -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
 
-<style>
-@page {
- size: A4;
- margin: 0;
-}
-
-body {
- margin: 0;
- background: #eee;
-}
-
-a {
-  color: #786a6a; 
-    transition: 0.3s;
-    text-decoration: none;
-  }
-
-  .a4 {
-  width: 100vw;          /* occupa tutta la larghezza dello schermo */
-  height: 100vh;         /* occupa tutta l’altezza dello schermo */
-  position: relative;
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  color: #2b2b2b;
-}
-.canvas {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.canvas img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-  pointer-events: none;
-}
-
-/* Nomi */
-.titolo {
-  position: absolute;
-  top: 15%;        /* 10% dell'altezza dell'immagine */
-  width: 100%;
-  text-align: center;
-  color: #786a6a; 
- font-family: 'Great Vibes', cursive;
-  font-size: 8vw;  /* ridimensiona in base alla larghezza dello schermo */
-}
-
-/* Sottotitolo */
-.sottotitolo {
- position: absolute;
- top: 20%;
- color: #786a6a; 
- width: 100%;
- text-align: center;
- font-size: 3vw;
- font-style: italic;
-}
-
-/* Corpo centrale */
-.corpo {
- position: absolute;
- top: 55%;
- width: 100%;
- text-align: center;
- font-size:  3vw;
- color: #786a6a;
- text-decoration: none;
- line-height: 1.8;
-}
-
-/* Luogo ricevimento */
-.villa {
- margin-top: 5%;
- font-size:  3vw;
- font-style: italic;
-}
-
-/* Frase finale */
-.finale {
- margin-top: 5%;
- font-size:  3vw;
- font-style: italic;
-}
-
-/* RSVP */
-.rsvp {
- position: absolute;
- bottom: 7%;
- right: 10%;
- font-size: 3vw;
- font-style: italic;
-}
-
-/* Scritta nascosta */
-.hidden-text {
-  position: absolute;
-  top: 35%;        /* metà tra 20% e 50% */
-  left: 5%;        /* metà di 20% della larghezza */
-  width: 20%;
-  text-align: center;
-  font-size: 4vw;
-  color: white;
-  font-family: 'Playfair Display', serif;
-  display: none;
-}
-
-/* Area cliccabile */
-.click-area {
-  position: absolute;
-  top: 27%;
-  left: 10%;
-  width: 30%;
-  height: 25%;  /* dal 20% al 50% top */
-  cursor: pointer;
-  /* per debugging puoi mettere border: 1px solid red; */
-}
-
-/* Se vuoi animazione comparsa */
-.hidden-text.show {
-  display: block;
-}
-
-/* contenitore fogli (pannello) */
-.action-buttons {
-  position: fixed;
-
-  top: 60%;       /* distanza dall’alto */
-  right: 0px;      /* bordo destro */
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  overflow: visible;
-}
-
-/* foglio generico */
-.action-btn {
-  width: 100px;
-  height: 250px;
-  background: url('fogliotagliato.png') no-repeat center top;
-  background-size: cover;   /* adatta l'immagine al contenitore */
-  display: flex;
-  justify-content: flex-start; /* orizzontale verso sinistra */
-  align-items: flex-start;     /* verticale verso l’alto */
-  padding: 30px;    
-  padding-top: 30px;               /* spazio interno su tutti i lati */
-  font-size: 1.6em;
-  cursor: pointer;
-  position: relative;
-  margin-top: -200px;          /* sovrapposizione verticale */
-  margin-right: -20px; 
-  border-radius: 6px;
-  filter: drop-shadow(15px 15px 20px rgba(0, 0, 0, 0.686)); /* segue contorno trasparente */
-
-  transition: transform 0.2s;
-}
-
-/* rotazioni leggermente diverse per ogni foglio */
-.action-btn:nth-child(1) { transform: rotate(-2deg); z-index: 100; }
-.action-btn:nth-child(2) { transform: rotate(1.5deg); z-index: 101; }
-.action-btn:nth-child(3) { transform: rotate(-1deg); z-index: 102; }
-
-
-.location {
-  display: inline-flex;   
-  justify-content: center;
-}
-.location-link i {
-  font-size: 1em;
-  opacity: 0.7;
-}
-
-.address {
-  font-size: 0.8em;
-}
-
-.stage{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
-}
-
-.book{
-  position:absolute;
-  inset:0;
-  perspective:2000px;
-  z-index:10;
-  pointer-events:auto;
-}
-
-.page {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  top: 0;
-  background: rgba(245,240,235,0.95);
-  box-shadow: 0 0 40px rgba(0,0,0,0.3);
-  transform-origin: left;
-  transition: transform 4s cubic-bezier(.77,0,.18,1); /* più lento */
-  backface-visibility: hidden; /* necessario per 3D realistico */
-}
-
-.page.right {
-  right: 0;
-  transform-origin: right;
-}
-
-/* Bottone al centro pagina sinistra */
-.open-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-160%, -50%);
-  padding: 18px 40px;
-  border: 1px solid #786a6a;
-  color: #786a6a;
-  font-size: 22px;
-  cursor: pointer;
-  background: rgba(255,255,255,0.75);
-  z-index: 5;
-}
-
-
-.page.left{
-  left:0;
-}
-
-.book.open .left{
-  transform:rotateY(-120deg);
-}
-
-.book.open .right{
-  transform:rotateY(120deg);
-}
-
-#partecipazionePanel {
-  position: fixed;
-  top:50%;
-  right:0;
-  width: 80%;       /* larghezza del pannello */
-  max-width: 500px;
-  height: 40%;
-  background: url('fogliotagliato.png') no-repeat center top;
-  background-size: cover;
-  
-  filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.4)); /* segue contorno trasparente */
-  transform: translate(100%, -50%); /* fuori schermo a destra e centrato verticalmente */
+ <!-- Il tuo CSS -->
+ <link rel="stylesheet" href="stile.css">
  
-  transition: transform 0.6s ease;
-  z-index: 200;
-  overflow-y: auto;
-  padding: 20px;
-}
-
-/* quando deve apparire */
-#partecipazionePanel.show {
-  transform: translate(-40%, -60%); /* entra al centro della pagina */
-}
-
-/* Bottone chiudi */
-#closePartecipazione {
-  position: absolute;
-  top: 100px;
-  right: 20px;
-  font-size: 2em;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #786a6a;
-}
-#partecipazionePanel iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-}
-
-#regaloPanel {
-  position: fixed;
-  top:50%;
-  left:50%;
-  width: 80%;
-  max-width: 500px;
-  height: 50%;
-  background: url('fogliotagliato.png') no-repeat center top;
-  background-size: cover;
-  transform: translate(100%, -50%); /* fuori schermo a destra */
-  transition: transform 0.6s ease;
-  z-index: 200;
-  overflow-y: auto;
-  padding: 20px;
-}
-
-#regaloPanel.show {
-  transform: translate(-50%, -50%); /* entra al centro */
-}
-
-#regaloPanel iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-#closeRegalo {
-  position: absolute;
-  top: 100px;
-  right: 20px;
-  font-size: 2em;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #786a6a;
-}
-
-</style>
-
-
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const area = document.getElementById("click-area");
@@ -364,7 +44,7 @@ a {
   <div class="canvas">
     <img src="sfondo.png" alt="">
     
- <div class="titolo">Manuele &amp; Tania</div>
+ <div class="titolo">Francesco &amp; Alessia</div>
 
  <div class="sottotitolo">
    annunciano il loro matrimonio
@@ -393,52 +73,39 @@ Non potevamo immaginare il nostro giorno speciale senza condividere la gioia con
  <div class="corpo" id="corpo">
   <div><b>Sabato 10 ottobre 2026</b></div>
 
-  <a href="https://www.google.it/maps/place/Basilica+of+the+Crowned+Mother+of+Good+Counsel+and+Queen+of+the+Catholic+Church/@40.8649994,14.2469316,17z/data=!3m2!4b1!5s0x133b087b1480bb21:0x202069aca76c99fb!4m6!3m5!1s0x133b087b12fa8291:0x5b8ca8d302e38fe8!8m2!3d40.8649994!4d14.2469316!16s%2Fm%2F026wfm_"
+  <a href="https://www.google.it/maps/place/Basilica+di+San+Giovanni+in+Laterano,+Piazza+San+Giovanni+in+Laterano+4,+00184+Roma+RM"
   target="_blank"
   class="location-link">
-
   <i class="fa-solid fa-location-dot"></i>
-
   <span class="location-text">
-    Basilica dell’Incoronata Madre del Buon Consiglio
-    <div class="address">via Capodimonte 13, Napoli</div>
+    Basilica of San Giovanni in Laterano
+    <div class="address">P.za. San Giovanni In Laterano, Roma</div>
   </span>
 
 </a>
 
-
-
    <div style="margin-top:6mm;">
      I festeggiamenti continueranno presso
    </div>
-   <a href="https://www.google.it/maps/place/Villa+Soglia+-+Wedding+%26+Events/@40.78354,14.699382,17z/data=!3m1!4b1!4m6!3m5!1s0x133bc7ae07ddbacd:0xe0654de443bfd980!8m2!3d40.78354!4d14.699382!16s%2Fg%2F1tdqw_jh"
+   <a href="https://www.google.it/maps/place/Villa+Borghese,+00197+Roma+RM"
    target="_blank"
    class="location-link">
   <i class="fa-solid fa-location-dot"></i>
   <span>
-    Villa Soglia
-    <div class="address">corso Claudio 1, Castel San Giorgio, Salerno</div>
+    Villa Borghese
+    <div class="address">Piazzale Napoleone I, Roma</div>
   </span>
 </a>
 
   </div>
 
   <div class="action-buttons">
-    <a href="partecipazione.html" class="action-btn" style="--i:0;"><i class="fa-solid fa-check"></i></a>
-    <a href="https://forms.gle/o3xgW6BfQE7T1m6g8" class="action-btn" style="--i:1;"><i class="fa-solid fa-pen"></i></a>
-    <a href="regalo.html" class="action-btn" style="--i:2;"><i class="fa-solid fa-gift"></i></a>
+    <a href="partecipazione.html" class="action-btn"><i class="fa-solid fa-check"></i></a>
+    <a href="https://forms.gle/o3xgW6BfQE7T1m6g8" class="action-btn"><i class="fa-solid fa-pen"></i></a>
+    <a href="regalo.html" class="action-btn"><i class="fa-solid fa-gift"></i></a>
+  
+  
   </div>
-
-    <!-- Pannello partecipazione (inizialmente nascosto) -->
-<div id="partecipazionePanel">
-  <iframe src="partecipazione.html"></iframe>
-  <button id="closePartecipazione">&times;</button>
-</div>
-
-<div id="regaloPanel">
-  <iframe src="regalo.html"></iframe>
-  <button id="closeRegalo">&times;</button>
-</div>
 
  <!-- Bottoni sotto il corpo del matrimonio -->
 </div>
@@ -492,54 +159,6 @@ btn.addEventListener("click", () => {
 });
 
   </script>
-    <script>
-      // il pannello Partecipazione
-  document.getElementById("openPartecipazione").addEventListener("click", () => {
-    document.getElementById("partecipazionePanel").classList.add("show");
-  });
   
-  // Chiudi il pannello
-  document.getElementById("closePartecipazione").addEventListener("click", () => {
-    document.getElementById("partecipazionePanel").classList.remove("show");
-  });
-  
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        const partecipazionePanel = document.getElementById("partecipazionePanel");
-        const actionBtn = document.querySelector(".action-btn[href='partecipazione.html']");
-        const closeBtn = document.getElementById("closePartecipazione");
-      
-        // Apri pannello con transizione
-        actionBtn.addEventListener("click", function(e){
-          e.preventDefault();  // impedisce il redirect
-          partecipazionePanel.classList.add("show");
-        });
-      
-        // Chiudi pannello
-        closeBtn.addEventListener("click", function(){
-          partecipazionePanel.classList.remove("show");
-        });
-      });
-      </script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const regaloPanel = document.getElementById("regaloPanel");
-    const actionBtnRegalo = document.querySelector(".action-btn[href='regalo.html']");
-    const closeBtnRegalo = document.getElementById("closeRegalo");
-  
-    // Apri pannello regalo
-    actionBtnRegalo.addEventListener("click", function(e){
-      e.preventDefault();
-      regaloPanel.classList.add("show");
-    });
-  
-    // Chiudi pannello
-    closeBtnRegalo.addEventListener("click", function(){
-      regaloPanel.classList.remove("show");
-    });
-  });
-  </script>
 </body>
 </html>

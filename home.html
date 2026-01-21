@@ -9,287 +9,8 @@
 
 <!-- Font eleganti -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
-
-<style>
-@page {
- size: A4;
- margin: 0;
-}
-
-body {
- margin: 0;
- background: #eee;
-}
-
-a {
-  color: #786a6a; 
-    transition: 0.3s;
-    text-decoration: none;
-  }
-
-  .a4 {
-  width: 100vw;          /* occupa tutta la larghezza dello schermo */
-  height: 100vh;         /* occupa tutta l’altezza dello schermo */
-  position: relative;
-  margin: 0;
-  font-family: 'Playfair Display', serif;
-  color: #2b2b2b;
-}
-.canvas {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.canvas img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-  pointer-events: none;
-}
-
-/* Nomi */
-.titolo {
-  position: absolute;
-  top: 15%;        /* 10% dell'altezza dell'immagine */
-  width: 100%;
-  text-align: center;
-  color: #786a6a; 
- font-family: 'Great Vibes', cursive;
-  font-size: 8vw;  /* ridimensiona in base alla larghezza dello schermo */
-}
-
-/* Sottotitolo */
-.sottotitolo {
- position: absolute;
- top: 20%;
- color: #786a6a; 
- width: 100%;
- text-align: center;
- font-size: 3vw;
- font-style: italic;
-}
-
-/* Corpo centrale */
-.corpo {
- position: absolute;
- top: 55%;
- width: 100%;
- text-align: center;
- font-size:  3vw;
- color: #786a6a;
- text-decoration: none;
- line-height: 1.8;
-}
-
-/* Luogo ricevimento */
-.villa {
- margin-top: 5%;
- font-size:  3vw;
- font-style: italic;
-}
-
-/* Frase finale */
-.finale {
- margin-top: 5%;
- font-size:  3vw;
- font-style: italic;
-}
-
-/* RSVP */
-.rsvp {
- position: absolute;
- bottom: 7%;
- right: 10%;
- font-size: 3vw;
- font-style: italic;
-}
-
-/* Scritta nascosta */
-.hidden-text {
-  position: absolute;
-  top: 35%;        /* metà tra 20% e 50% */
-  left: 5%;        /* metà di 20% della larghezza */
-  width: 20%;
-  text-align: center;
-  font-size: 4vw;
-  color: white;
-  font-family: 'Playfair Display', serif;
-  display: none;
-}
-
-/* Area cliccabile */
-.click-area {
-  position: absolute;
-  top: 27%;
-  left: 10%;
-  width: 30%;
-  height: 25%;  /* dal 20% al 50% top */
-  cursor: pointer;
-  /* per debugging puoi mettere border: 1px solid red; */
-}
-
-/* Se vuoi animazione comparsa */
-.hidden-text.show {
-  display: block;
-}
-
-.action-buttons {
-  position: absolute;
-  bottom: 10%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 2vw; 
-}
-
-.action-btn {
-  width: 70px;
-  height: 70px;
-  border: 1px solid rgba(0,0,0,0.2);
-  background-color: transparent;
-  color: #786a6a; /* colore pastello se vuoi */
-  border-radius: 10%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5em;
-  text-decoration: none;
-  transition: transform 0.2s, color 0.2s;
-}
-
-.action-btn:hover {
-  transform: scale(1.2);
-  color: #ffb6c1;
-  border-color: #ffb6c1;
-}
-.location {
-  display: inline-flex;   
-  justify-content: center;
-}
-.location-link i {
-  font-size: 1em;
-  opacity: 0.7;
-}
-
-.address {
-  font-size: 0.8em;
-}
-
-.stage{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
-}
-
-.book{
-  position:absolute;
-  inset:0;
-  perspective:2000px;
-  z-index:10;
-  pointer-events:auto;
-}
-
-.page{
-  position:absolute;
-  width:50%;
-  height:100%;
-  top:0;
-  background:rgba(245,240,235,0.95);
-  box-shadow:0 0 40px rgba(0,0,0,0.3);
-  transform-origin:left;
-  transition:1.4s cubic-bezier(.77,0,.18,1);
-}
-
-.page.right{
-  right:0;
-  transform-origin:right;
-}
-
-.page.left{
-  left:0;
-}
-
-.book.open .left{
-  transform:rotateY(-120deg);
-}
-
-.book.open .right{
-  transform:rotateY(120deg);
-}
-
-.open-btn{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
-  padding:18px 40px;
-  border:1px solid #786a6a;
-  color:#786a6a;
-  font-size:22px;
-  cursor:pointer;
-  background:rgba(255,255,255,0.75);
-  z-index:5;
-}
-
-.hint-circle{
-  position:absolute;
-  border:3px solid rgba(120,106,106,0.8);
-  border-radius:50%;
-  animation:pulse 2s ease-out forwards;
-  pointer-events:none;
-  z-index:50;
-}
-
-@keyframes pulse{
-  0%{transform:scale(0.3); opacity:0;}
-  30%{transform:scale(1); opacity:1;}
-  100%{transform:scale(1.4); opacity:0;}
-}
-
-#partecipazionePanel {
-  position: fixed;
-  top: 0;
-  right: -100vw;       /* fuori dallo schermo a destra */
-  width: 100vw;
-  height: 100vh;
-  background: #fff;
-  z-index: 200;
-  box-shadow: -6px 0 30px rgba(0,0,0,0.3);
-  transition: right 0.6s ease-in-out;
-  overflow: auto;
-}
-
-#partecipazionePanel.show {
-  right: 0;           /* entra da destra */
-}
-
-#partecipazionePanel iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-#closePartecipazione {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 10px 15px;
-  font-size: 24px;
-  background: rgba(255,255,255,0.8);
-  border: 1px solid #786a6a;
-  cursor: pointer;
-  z-index: 210;
-}
-
-
-</style>
-
+ <!-- Il tuo CSS -->
+ <link rel="stylesheet" href="stile.css">
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const area = document.getElementById("click-area");
@@ -307,7 +28,7 @@ a {
   <div class="canvas">
     <img src="sfondo.png" alt="">
     
- <div class="titolo">Manuele &amp; Tania</div>
+ <div class="titolo">Francesco &amp; Alessia</div>
 
  <div class="sottotitolo">
    annunciano il loro matrimonio
@@ -336,42 +57,39 @@ Non potevamo immaginare il nostro giorno speciale senza condividere la gioia con
  <div class="corpo" id="corpo">
   <div><b>Sabato 10 ottobre 2026</b></div>
 
-  <a href="https://www.google.it/maps/place/Basilica+of+the+Crowned+Mother+of+Good+Counsel+and+Queen+of+the+Catholic+Church/@40.8649994,14.2469316,17z/data=!3m2!4b1!5s0x133b087b1480bb21:0x202069aca76c99fb!4m6!3m5!1s0x133b087b12fa8291:0x5b8ca8d302e38fe8!8m2!3d40.8649994!4d14.2469316!16s%2Fm%2F026wfm_"
+  <a href="https://www.google.it/maps/place/Basilica+di+San+Giovanni+in+Laterano,+Piazza+San+Giovanni+in+Laterano+4,+00184+Roma+RM"
   target="_blank"
   class="location-link">
-
   <i class="fa-solid fa-location-dot"></i>
-
   <span class="location-text">
-    Basilica dell’Incoronata Madre del Buon Consiglio
-    <div class="address">via Capodimonte 13, Napoli</div>
+    Basilica of San Giovanni in Laterano
+    <div class="address">P.za. San Giovanni In Laterano, Roma</div>
   </span>
-  </a>
+
+</a>
+
    <div style="margin-top:6mm;">
      I festeggiamenti continueranno presso
    </div>
-   <a href="https://www.google.it/maps/place/Villa+Soglia+-+Wedding+%26+Events/@40.78354,14.699382,17z/data=!3m1!4b1!4m6!3m5!1s0x133bc7ae07ddbacd:0xe0654de443bfd980!8m2!3d40.78354!4d14.699382!16s%2Fg%2F1tdqw_jh"
+   <a href="https://www.google.it/maps/place/Villa+Borghese,+00197+Roma+RM"
    target="_blank"
    class="location-link">
   <i class="fa-solid fa-location-dot"></i>
   <span>
-    Villa Soglia
-    <div class="address">corso Claudio 1, Castel San Giorgio, Salerno</div>
+    Villa Borghese
+    <div class="address">Piazzale Napoleone I, Roma</div>
   </span>
-  </a>
+</a>
+
   </div>
 
   <div class="action-buttons">
     <a href="partecipazione.html" class="action-btn"><i class="fa-solid fa-check"></i></a>
     <a href="https://forms.gle/o3xgW6BfQE7T1m6g8" class="action-btn"><i class="fa-solid fa-pen"></i></a>
     <a href="regalo.html" class="action-btn"><i class="fa-solid fa-gift"></i></a>
+  
+  
   </div>
-
-  <!-- Pannello partecipazione (inizialmente nascosto) -->
-<div id="partecipazionePanel">
-  <iframe src="partecipazione.html"></iframe>
-  <button id="closePartecipazione">&times;</button>
-</div>
 
  <!-- Bottoni sotto il corpo del matrimonio -->
 </div>
@@ -411,42 +129,6 @@ Non potevamo immaginare il nostro giorno speciale senza condividere la gioia con
     setTimeout(()=> book.remove(), 1600);
   });
   </script>
-
-<script>
-  const clickableAreas = [
-    document.getElementById("click-area"),
-    ...document.querySelectorAll(".location-link"),
-    ...document.querySelectorAll(".action-btn")
-  ];
   
-  document.addEventListener("click", e => {
-    // se clicca su un'area cliccabile, non mostrare i cerchi
-    if(e.target.closest("#click-area, .action-btn, .location-link, #openBtn")) return;
-  
-    clickableAreas.forEach(el => {
-      const r = el.getBoundingClientRect();
-      const circle = document.createElement("div");
-      circle.className = "hint-circle";
-      circle.style.width = "30px";
-      circle.style.height = "30px";
-      circle.style.left = (r.left + r.width/2 - 18) + "px";
-      circle.style.top  = (r.top  + r.height/2 - 18) + "px";
-      document.body.appendChild(circle);
-      setTimeout(()=>circle.remove(),2000);
-    });
-  });
-  </script>
-  <script>
-    // il pannello Partecipazione
-document.getElementById("openPartecipazione").addEventListener("click", () => {
-  document.getElementById("partecipazionePanel").classList.add("show");
-});
-
-// Chiudi il pannello
-document.getElementById("closePartecipazione").addEventListener("click", () => {
-  document.getElementById("partecipazionePanel").classList.remove("show");
-});
-
-  </script>
 </body>
 </html>
