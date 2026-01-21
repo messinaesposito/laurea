@@ -13,6 +13,7 @@
  <!-- Il tuo CSS -->
  <link rel="stylesheet" href="stile.css">
  <style>
+  
 .stage {
   width: 100vw;
   height: 100vh;
@@ -31,6 +32,7 @@
   z-index:10;
   pointer-events:auto;
 }
+
 
 .page {
   width: 100%;
@@ -144,31 +146,8 @@
 </div>
 
 <script>
-  document.addEventListener("contextmenu", e => e.preventDefault());
-  </script>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const area = document.getElementById("click-area");
-    const corpo = document.getElementById("corpo");
-    const tempText = document.getElementById("temporary-text");
-  
-    area.addEventListener("click", function() {
-      // nascondi tutte le scritte dentro il corpo
-      corpo.style.display = "none";
-  
-      // mostra il testo temporaneo
-      tempText.style.display = "block";
-  
-      // dopo 9 secondi torna visibile il corpo e nasconde il testo temporaneo
-      setTimeout(() => {
-        tempText.style.display = "none";
-        corpo.style.display = "block";
-      }, 9000);
-    });
-  });
-  </script>
 
-<script>
+const book = document.querySelector(".book");
 const btn = document.getElementById("openBtn");
 const upPage = document.getElementById("upPage");
 const downPage = document.getElementById("downPage");
@@ -186,11 +165,15 @@ btn.addEventListener("click", () => {
   btn.style.transition = "opacity 1s";
   btn.style.opacity = "0";
 
-  // Dopo l’animazione rimuovi il bottone
-  setTimeout(() => btn.style.display = "none", 3000); // corrisponde alla durata della transizione
+  // Dopo l’animazione rimuovi il bottone e disabilita i click sui fogli
+  setTimeout(() => {
+    btn.style.display = "none";
+  }, 3000); // corrisponde alla durata della transizione
 });
 
-
+ setTimeout(() => {
+    book.remove();
+  }, 3000);
 
   </script>
   
