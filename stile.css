@@ -29,7 +29,7 @@ img.fullscreen {
 }
 
 a {
-  color: #786a6a; 
+  color: #ffffff; 
     transition: 0.3s;
     text-decoration: none;
   }
@@ -39,7 +39,7 @@ a {
   height: 100vh;         /* occupa tutta l’altezza dello schermo */
   position: relative;
   margin: 0;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cormorant Garamond', serif;
   color: #2b2b2b;
 }
 .canvas {
@@ -62,19 +62,19 @@ a {
 /* Nomi */
 .titolo {
   position: absolute;
-  top: 28%;        /* 10% dell'altezza dell'immagine */
+  top: 20%;        /* 10% dell'altezza dell'immagine */
   width: 100%;
   text-align: center;
-  color: #786a6a; 
- font-family: 'Great Vibes', cursive;
+  color: #ffffff; 
+  font-family: 'Cormorant Garamond', serif;
   font-size: 8vw;  /* ridimensiona in base alla larghezza dello schermo */
 }
 
 /* Sottotitolo */
 .sottotitolo {
  position: absolute;
- top: 35%;
- color: #786a6a; 
+ top: 26%;
+ color: #ffffff; 
  width: 100%;
  text-align: center;
  font-size: 3vw;
@@ -84,11 +84,11 @@ a {
 /* Corpo centrale */
 .corpo {
  position: absolute;
- top: 40%;
+ top: 32%;
  width: 100%;
  text-align: center;
  font-size:  3vw;
- color: #786a6a;
+ color: #ffffff;
  text-decoration: none;
  line-height: 1.8;
 }
@@ -125,7 +125,7 @@ a {
   text-align: center;
   font-size: 4vw;
   color: white;
-  font-family: 'Playfair Display', serif;
+  font-family: 'Cormorant Garamond', serif;
   display: none;
 }
 
@@ -158,8 +158,8 @@ a {
   width: 70px;
   height: 70px;
   border: 1px solid rgba(0,0,0,0.2);
-  background-color: transparent;
-  color: #786a6a; /* colore pastello se vuoi */
+  background-color:  rgba(0,0,0,0.2);
+  color: #ffffff; /* colore pastello se vuoi */
   border-radius: 10%;
   display: flex;
   justify-content: center;
@@ -187,38 +187,6 @@ a {
   font-size: 0.8em;
 }
 
-.stage{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
-}
-
-.book{
-  position:absolute;
-  inset:0;
-  perspective:2000px;
-  z-index:10;
-  pointer-events:auto;
-}
-
-.page {
-  position: absolute;
-  width: 50%;
-  height: 100%;
-  top: 0;
-  background: rgba(245,240,235,0.95);
-  box-shadow: 0 0 40px rgba(0,0,0,0.3);
-  transform-origin: left;
-  transition: transform 4s cubic-bezier(.77,0,.18,1); /* più lento */
-  backface-visibility: hidden; /* necessario per 3D realistico */
-}
-
-.page.right {
-  right: 0;
-  transform-origin: right;
-}
-
 /* Bottone al centro pagina sinistra */
 .open-btn {
   position: absolute;
@@ -226,23 +194,10 @@ a {
   left: 50%;
   transform: translate(-160%, -50%);
   padding: 18px 40px;
-  border: 1px solid #786a6a;
-  color: #786a6a;
+  color: #ffffff;
   font-size: 22px;
   cursor: pointer;
   background: rgba(255,255,255,0.75);
   z-index: 5;
 }
 
-
-.page.left{
-  left:0;
-}
-
-.book.open .left{
-  transform:rotateY(-120deg);
-}
-
-.book.open .right{
-  transform:rotateY(120deg);
-}

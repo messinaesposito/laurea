@@ -12,7 +12,56 @@
 
  <!-- Il tuo CSS -->
  <link rel="stylesheet" href="stile.css">
- 
+ <style>
+.stage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: #eee;
+}
+
+
+.book{
+  position:absolute;
+  inset:0;
+  perspective:2000px;
+  z-index:10;
+  pointer-events:auto;
+
+.page {
+  width: 100%;
+  height: 50%;
+  background: white;
+  position: absolute;
+  left: 0;
+  transition: transform 1s ease;
+}
+
+.pageup {
+  top: 0;
+  transform-origin: top;
+}
+
+.pagedown {
+  bottom: 0;
+  transform-origin: bottom;
+}
+
+.open-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+
+ </style>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const area = document.getElementById("click-area");
@@ -28,72 +77,58 @@
 <body>
   <div class="stage">
     <div class="book">
-      <div class="page left" id="leftPage"></div>
-      <div class="page right" id="rightPage">
-        <img id="openBtn" src="cera.png" alt="Apri l'invito" style="
-             position: absolute;
-             top: 50%;
-             left: 50%;
-             transform: translate(-155%, -50%);
-             width: 200px;  /* puoi regolare la dimensione */
-             cursor: pointer;
-             z-index: 5;">
+      <div class="page pageup" id="upPage">
+        <img id="openBtn" src="cera.png" alt="Apri l'invito" class="open-btn" style="
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translate(-50%, -40%);
+        width: 200px;  /* puoi regolare la dimensione */
+        cursor: pointer;
+        z-index: 5;">
       </div>
+      <div class="page pagedown" id="downPage"></div>
+     
     </div>
 <div class="a4">
   <div class="canvas">
     <img src="sfondo.png" alt="">
     
- <div class="titolo">Francesco &amp; Alessia</div>
+ <div class="titolo">Francesco </div>
 
  <div class="sottotitolo">
-   annunciano il loro matrimonio
+   ti invita alla festa di laurea
  </div>
 
-  <!-- Scritta nascosta inizialmente -->
-  <div id="temporary-text" style="
-  position:absolute;
-  top:70%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  font-size:3vw;
-  text-align:center;
-  color: #786a6a;
-  font-family: 'Playfair Display', serif;
-  display:none;
-  z-index:10;
-">
-Non potevamo immaginare il nostro giorno speciale senza condividere la gioia con voi, che avete sempre fatto parte delle nostre vite e dei nostri ricordi più preziosi.
-
-</div>
-
-  <!-- Area cliccabile -->
-  <div id="click-area" class="click-area"></div>
+  
 
  <div class="corpo" id="corpo">
   <div><b>Sabato 10 ottobre 2026</b></div>
 
-  <a href="https://www.google.it/maps/place/Basilica+di+San+Giovanni+in+Laterano,+Piazza+San+Giovanni+in+Laterano+4,+00184+Roma+RM"
+  <a href="https://www.google.it/maps/place/Corso+Strada+Nuova+65,+27100+Pavia+PV,+Italia"
   target="_blank"
   class="location-link">
+  <div style="margin-top:6mm;">
+    alle 10:00 presso
+  </div>
   <i class="fa-solid fa-location-dot"></i>
   <span class="location-text">
-    Basilica of San Giovanni in Laterano
-    <div class="address">P.za. San Giovanni In Laterano, Roma</div>
+    Universtà degli studi di Pavia
+    <div class="address">Corso Strada Nuova 65,Pavia </div>
   </span>
 
 </a>
 
    <div style="margin-top:6mm;">
-     I festeggiamenti continueranno presso
+     alle 20:30 presso
    </div>
-   <a href="https://www.google.it/maps/place/Villa+Borghese,+00197+Roma+RM"
+   <a href="https://www.google.it/maps/place/Organics+SkyGarden+@Cielo,+Via+Giovanni+Battista+Pirelli+20,+20124+Milano+MI,+Italia"
    target="_blank"
    class="location-link">
   <i class="fa-solid fa-location-dot"></i>
   <span>
-    Villa Borghese
-    <div class="address">Piazzale Napoleone I, Roma</div>
+    Organics SkyGarden
+    <div class="address">Via Giovanni Battista Pirelli, Milano</div>
   </span>
 </a>
 
@@ -101,10 +136,6 @@ Non potevamo immaginare il nostro giorno speciale senza condividere la gioia con
 
   <div class="action-buttons">
     <a href="partecipazione.html" class="action-btn"><i class="fa-solid fa-check"></i></a>
-    <a href="https://forms.gle/o3xgW6BfQE7T1m6g8" class="action-btn"><i class="fa-solid fa-pen"></i></a>
-    <a href="regalo.html" class="action-btn"><i class="fa-solid fa-gift"></i></a>
-  
-  
   </div>
 
  <!-- Bottoni sotto il corpo del matrimonio -->
@@ -138,25 +169,27 @@ Non potevamo immaginare il nostro giorno speciale senza condividere la gioia con
   </script>
 
 <script>
-const book = document.querySelector(".book");
 const btn = document.getElementById("openBtn");
-const leftPage = document.querySelector(".page.left");
-const rightPage = document.querySelector(".page.right");
+const upPage = document.getElementById("upPage");
+const downPage = document.getElementById("downPage");
 
 btn.addEventListener("click", () => {
-  // apri pagina destra prima
-  rightPage.style.transform = "rotateY(120deg)";
+  // Imposta transizioni più naturali
+  upPage.style.transition = "transform 1.2s cubic-bezier(0.25, 1, 0.5, 1)";
+  downPage.style.transition = "transform 1.2s cubic-bezier(0.25, 1, 0.5, 1)";
 
-  // apri pagina sinistra dopo 0.5s
-  setTimeout(() => {
-    leftPage.style.transform = "rotateY(-120deg)";
-  }, 500);
+  // Trasforma le pagine come se fossero fogli veri
+  upPage.style.transform = "translateY(-100%) rotateX(-5deg)";
+  downPage.style.transform = "translateY(100%) rotateX(5deg)";
 
-  // rimuovi libro dopo 5s (larghezza della transizione + ritardo)
-  setTimeout(() => {
-    book.remove();
-  }, 5000);
+  // Nasconde il bottone lentamente
+  btn.style.transition = "opacity 0.6s";
+  btn.style.opacity = "0";
+
+  // Dopo l'animazione rimuovi il bottone
+  setTimeout(() => btn.style.display = "none", 1200);
 });
+
 
   </script>
   
