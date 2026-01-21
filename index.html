@@ -30,6 +30,7 @@
   perspective:2000px;
   z-index:10;
   pointer-events:auto;
+}
 
 .page {
   width: 100%;
@@ -82,6 +83,7 @@
         position: absolute;
         top: 100%;
         left: 50%;
+        background-color: transparent;
         transform: translate(-50%, -40%);
         width: 200px;  /* puoi regolare la dimensione */
         cursor: pointer;
@@ -130,13 +132,14 @@
     Organics SkyGarden
     <div class="address">Via Giovanni Battista Pirelli, Milano</div>
   </span>
+ 
 </a>
-
+<div class="action-buttons">
+  <a href="partecipazione.html" class="action-btn"><i class="fa-solid fa-check"></i></a>
+</div>
   </div>
 
-  <div class="action-buttons">
-    <a href="partecipazione.html" class="action-btn"><i class="fa-solid fa-check"></i></a>
-  </div>
+ 
 
  <!-- Bottoni sotto il corpo del matrimonio -->
 </div>
@@ -174,21 +177,22 @@ const upPage = document.getElementById("upPage");
 const downPage = document.getElementById("downPage");
 
 btn.addEventListener("click", () => {
-  // Imposta transizioni più naturali
-  upPage.style.transition = "transform 1.2s cubic-bezier(0.25, 1, 0.5, 1)";
-  downPage.style.transition = "transform 1.2s cubic-bezier(0.25, 1, 0.5, 1)";
+  // Transizioni più lente e morbide
+  upPage.style.transition = "transform 3s cubic-bezier(0.25, 1, 0.5, 1)";
+  downPage.style.transition = "transform 3s cubic-bezier(0.25, 1, 0.5, 1)";
 
-  // Trasforma le pagine come se fossero fogli veri
+  // Movimento fogli realistico
   upPage.style.transform = "translateY(-100%) rotateX(-5deg)";
   downPage.style.transform = "translateY(100%) rotateX(5deg)";
 
-  // Nasconde il bottone lentamente
-  btn.style.transition = "opacity 0.6s";
+  // Bottone scompare lentamente
+  btn.style.transition = "opacity 1s";
   btn.style.opacity = "0";
 
-  // Dopo l'animazione rimuovi il bottone
-  setTimeout(() => btn.style.display = "none", 1200);
+  // Dopo l’animazione rimuovi il bottone
+  setTimeout(() => btn.style.display = "none", 3000); // corrisponde alla durata della transizione
 });
+
 
 
   </script>
