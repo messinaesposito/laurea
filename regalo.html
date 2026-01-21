@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>RSVP Matrimonio</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+body {
+  padding-Top: 20px;
+  font-family: 'Playfair Display', serif;
+  background: transparent;
+}
+
+/* Corpo principale centrato */
+.corpo {
+  padding-Top: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  overflow-y: auto;    
+  max-height: 200px;
+  border: none;            /* già presente */
+  background: none;        /* niente colore o immagine di sfondo */
+  box-shadow: none;        /* rimuove eventuali ombre */
+  background: transparent;
+  text-align: center;
+  color: #786a6a;
+  line-height: 1.8;
+  z-index: 10;
+}
+
+/* Input e bottoni RSVP */
+.rsvp-step1 input,
+.rsvp-step2 input,
+.rsvp-step2 select {
+  width: 100%;
+  margin: 8px 0;
+  padding: 6px 8px;
+  border: none;
+  border-bottom: 1px solid #786a6a;
+  background: transparent;
+  color: #786a6a;
+  font-size: 1em;
+}
+
+.rsvp-step1 button,
+.rsvp-step2 button,
+#partecipantiContainer button {
+  padding: 8px 20px;
+  margin: 5px;
+  border: 1px solid #786a6a;
+  background: transparent;
+  color: #786a6a;
+  cursor: pointer;
+}
+
+.partecipante {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.partecipante input {
+  flex: 1;
+}
+.partecipante select {
+  flex: 0 0 100px;
+}
+.partecipante button.remove-btn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #555;
+}
+
+.partecipante button.remove-btn:hover {
+  color: #000;
+}
+
+.rsvp-step2 { display: none; }
+
+</style>
+</head>
+
+<body>
+
+<div class="corpo">
+  <div class="rsvp-overlay">
+    <div class="rsvp-step1">
+      <label>La vostra presenza saraà il dono più prezionso per noi</label>
+      <div class="iban-container" style="margin-top:15px; text-align:center; display:block; width:100%;">
+        <input type="text" id="ibanField" value="IT00X0000000000000000000000" readonly 
+               style="width:100%; padding:5px; text-align:center; display:block; margin:0 auto 8px auto;">
+        <button type="button" onclick="copyIBAN()" style="padding:5px 15px;">Copia IBAN</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function copyIBAN() {
+  const iban = document.getElementById("ibanField");
+  iban.select();
+  iban.setSelectionRange(0, 99999); // per dispositivi mobili
+  navigator.clipboard.writeText(iban.value)
+    .then(() => alert("IBAN copiato negli appunti!"))
+    .catch(() => alert("Impossibile copiare l'IBAN."));
+}
+</script>
+</body>
+</html>

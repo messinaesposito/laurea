@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>RSVP Matrimonio</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+
+<style>
+body {
+  padding-Top: 20px;
+  font-family: 'Playfair Display', serif;
+  background: transparent;
+}
+
+/* Corpo principale centrato */
+.corpo {
+  padding-Top: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  overflow-y: auto;    
+  max-height: 200px;
+  border: none;            /* già presente */
+  background: none;        /* niente colore o immagine di sfondo */
+  box-shadow: none;        /* rimuove eventuali ombre */
+  background: transparent;
+  text-align: center;
+  color: #786a6a;
+  line-height: 1.8;
+  z-index: 10;
+}
+
+/* Input e bottoni RSVP */
+.rsvp-step1 input,
+.rsvp-step2 input,
+.rsvp-step2 select {
+  width: 100%;
+  margin: 8px 0;
+  padding: 6px 8px;
+  border: none;
+  border-bottom: 1px solid #786a6a;
+  background: transparent;
+  color: #786a6a;
+  font-size: 1em;
+}
+
+.rsvp-step1 button,
+.rsvp-step2 button,
+#partecipantiContainer button {
+  padding: 8px 20px;
+  margin: 5px;
+  border: 1px solid #786a6a;
+  background: transparent;
+  color: #786a6a;
+  cursor: pointer;
+}
+
+.partecipante {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.partecipante input {
+  flex: 1;
+}
+.partecipante select {
+  flex: 0 0 100px;
+}
+.partecipante button.remove-btn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #555;
+}
+
+.partecipante button.remove-btn:hover {
+  color: #000;
+}
+
+.rsvp-step2 { display: none; }
+
+</style>
+</head>
+
+<body>
+
+<div class="corpo">
+  <div class="rsvp-overlay">
+    <div class="rsvp-step1">
+      <input type="text" id="rsvpName" placeholder="Inserisci Nome e Cognome" oninput="checkName()">
+      <div>
+        <label>Parteciperai?</label>
+        <button id="yesBtn" onclick="showStep2(true)">Sì</button>
+        <button id="noBtn" onclick="sendNo()">No</button>
+      </div>
+    </div>
+
+    <div class="rsvp-step2" id="step2">
+      <label>Partecipi da solo o in compagnia?</label>
+      <select id="compagnia" onchange="toggleExtra()">
+        <option value="solo">Solo/a</option>
+        <option value="compagnia">In compagnia</option>
+      </select>
+    
+      <div id="extraFields" style="display:none;">
+        <div id="partecipantiContainer"></div>
+        <button type="button" onclick="addPartecipante()">Aggiungi partecipante</button>
+      </div>
+    
+      <button onclick="sendYes()">Invia</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function checkName(){
+  const name = document.getElementById("rsvpName").value.trim();
+  const yes = document.getElementById("yesBtn");
+  const no = document.getElementById("noBtn");
+  if(name.length>0){
+    yes.classList.add("enabled");
+    no.classList.add("enabled");
+  } else {
+    yes.classList.remove("enabled");
+    no.classList.remove("enabled");
+  }
+}
+
+function showStep2(isYes){
+  const name = document.getElementById("rsvpName").value.trim();
+  if(!name){ alert("Inserisci Nome e Cognome"); return; }
+  if(isYes){
+    document.getElementById("step2").style.display="block";
+  } else {
+    sendNo();
+  }
+  document.querySelector(".rsvp-step1").style.display="none";
+}
+
+function toggleExtra(){
+  const val = document.getElementById("compagnia").value;
+  document.getElementById("extraFields").style.display = (val==="compagnia") ? "block":"none";
+}
+
+function addPartecipante(){
+  const container = document.getElementById("partecipantiContainer");
+  const div = document.createElement("div");
+  div.classList.add("partecipante");
+  div.innerHTML = `
+    <input type="text" placeholder="Nome partecipante">
+    <select>
+      <option value="adulto">Adulto</option>
+      <option value="bimbo03">Bambino 0-3</option>
+      <option value="bimbo3plus">Bambino 3+</option>
+    </select>
+    <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+  `;
+  container.appendChild(div);
+}
+
+function sendNo(){
+  const name = document.getElementById("rsvpName").value.trim();
+  if(!name){ alert("Inserisci Nome e Cognome"); return; }
+  const msg = `Ciao! Sono ${name} e purtroppo non potrò partecipare al matrimonio 💌`;
+  window.open("https://wa.me/393470692307?text="+encodeURIComponent(msg), "_blank");
+}
+
+function sendYes(){
+  const name = document.getElementById("rsvpName").value.trim();
+  if(!name){ alert("Inserisci Nome e Cognome"); return; }
+
+  const extraElems = document.querySelectorAll("#partecipantiContainer .partecipante");
+  let extraMsg = "";
+  extraElems.forEach(el => {
+    const n = el.querySelector("input").value.trim();
+    const t = el.querySelector("select").value;
+    if(n) extraMsg += `${n} (${t})\n`;
+  });
+
+  const msg = `Conferma partecipazione matrimonio 💍
+Nome: ${name}
+Partecipanti aggiuntivi:
+${extraMsg}`;
+
+  window.open("https://wa.me/393470692307?text="+encodeURIComponent(msg), "_blank");
+}
+</script>
+
+</body>
+</html>
